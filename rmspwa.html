@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Image Upload PWA</title>
+  <!-- Import Tailwind CSS styles -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.17/tailwind.min.css">
+  <style>
+    /* Add background styles */
+    body {
+      background-color: #161616;
+      color: #ffffff;
+      font-family: 'Montserrat', sans-serif;
+    }
+    #video-bg {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+      z-index: -1;
+    }
+    .header {
+      border-bottom: 1px solid #404040;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+    }
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .header p {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      opacity: 0.7;
+    }
+    .file-input {
+      border: none;
+      border-bottom: 2px solid #404040;
+      background-color: transparent;
+      color: #ffffff;
+      font-size: 1.2rem;
+      padding: 0.5rem 0;
+      margin-bottom: 2rem;
+      width: 100%;
+      transition: border-bottom-color 0.2s ease-in-out;
+    }
+    .file-input:focus {
+      outline: none;
+      border-bottom-color: #3a86ff;
+    }
+    .upload-button {
+      background-color: #3a86ff;
+      border: none;
+      border-radius: 0.5rem;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 0.8rem 1.2rem;
+      transition: background-color 0.2s ease-in-out;
+    }
+    .upload-button:hover {
+      background-color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <nav class="bg-gray-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center">
+          <div class="hidden md:block">
+            <div class="ml-10 flex items-baseline space-x-4">
+              <a href="#" class="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <video id="video-bg" autoplay muted loop>
+    <source src="https://video-previews.elements.envatousercontent.com/6a101751-6c22-4863-b891-1735973bd9fc/watermarked_preview/watermarked_preview.mp4" type="video/mp4">
+  </video>
+  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-0">
+      <h1 class="text-3xl font-bold leading-tight text-gray-900">NuturAI PWA</h1>
+      <p class="mt-1 text-lg text-gray-500">Select an image:</p>
+      <div class="mt-6">
+        <input type="file" id="file-input" class="py-2 px-4 border border-gray-400 rounded-md">
+        <button id="upload-button" class="ml-4 py-2 px-4 border border-gray-400 rounded-md bg-blue-500 text-white">Upload</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Get references to the file input and upload button
+const fileInput = document.querySelector('#file-input');
+const uploadButton = document.querySelector('#upload-button');
+
+uploadButton.addEventListener('click', () => {
+  const file = fileInput.files[0];
+  const formData = new FormData();
+  formData.append('file', file);
+
+  fetch('http://127.0.0.1:8000/uploadfile/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data;boundary=ebf9f03029db4c2799ae16b5428b06bd',
+      'Accept': '*/*'
+    },
+    body: formData,
+    redirect: 'follow'
+  },{mode: 'no-cors'})
+  .then(response => response.json())
+  .then(data => {
+    console.log("client side");
+    console.log(data);
+  })
+  .catch(error => {
+    console.error("client side"+error);
+  });
+});
+</script>
+</body>
+</html>
