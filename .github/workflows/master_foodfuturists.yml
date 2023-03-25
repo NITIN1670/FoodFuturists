@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'FoodFuturists'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_47A387752DF54EEDA6E9290D0100D280 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2D47AE4893114E4F88C85B628F4EF276 }}
